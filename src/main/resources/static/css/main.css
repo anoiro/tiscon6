@@ -17,7 +17,8 @@ body {
 }
 
 .btn-primary {
-    background: #FBC0AF;
+#    background: #FBC0AF;
+    background: #FF0000;
     border-color: #FBC0AF;
 }
 
