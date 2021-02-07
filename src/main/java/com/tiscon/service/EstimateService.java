@@ -62,7 +62,22 @@ public class EstimateService {
         packageList.add(new CustomerPackage(customer.getCustomerId(), PackageType.WASHING_MACHINE.getCode(), dto.getWashingMachine()));
         estimateDAO.batchInsertCustomerPackage(packageList);
     }
-// public Integer boxCheck(UserOrderDto dto) {}
+    //追加
+
+    public Integer boxCheck(UserOrderDto dto) {
+        int boxes = getBoxForPackage(dto.getBox(), PackageType.BOX)
+                + getBoxForPackage(dto.getBed(), PackageType.BED)
+                + getBoxForPackage(dto.getBicycle(), PackageType.BICYCLE)
+                + getBoxForPackage(dto.getWashingMachine(), PackageType.WASHING_MACHINE);
+        if(boxes <= 200){
+            return 0;
+        }
+        else{
+            return 1;
+        }
+        }
+
+    //
     /**
      * 見積もり依頼に応じた概算見積もりを行う。
      *

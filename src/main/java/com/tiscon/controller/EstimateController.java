@@ -76,8 +76,13 @@ public class EstimateController {
      * @return 遷移先
      */
     @PostMapping(value = "submit", params = "confirm")
-    String confirm(UserOrderForm userOrderForm, Model model) {
+    String confirm(@Validated UserOrderForm userOrderForm, BindingResult result,Model model) {
+        if (result.hasErrors()) {
 
+            model.addAttribute("prefectures", estimateDAO.getAllPrefectures());
+            model.addAttribute("userOrderForm", userOrderForm);
+            return "input";
+        }
         model.addAttribute("prefectures", estimateDAO.getAllPrefectures());
         model.addAttribute("userOrderForm", userOrderForm);
         return "confirm";
@@ -131,6 +136,16 @@ public class EstimateController {
         // 料金の計算を行う。
         UserOrderDto dto = new UserOrderDto();
         BeanUtils.copyProperties(userOrderForm, dto);
+
+        //追加
+        Integer boxCheck = estimateService.boxCheck(dto);
+        if(boxCheck == 1){
+            model.addAttribute("prefectures", estimateDAO.getAllPrefectures());
+            model.addAttribute("userOrderForm", userOrderForm);
+            return "input";
+        }
+        //
+
         Integer price = estimateService.getPrice(dto);
 
         model.addAttribute("prefectures", estimateDAO.getAllPrefectures());

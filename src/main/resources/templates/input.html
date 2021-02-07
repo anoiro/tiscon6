@@ -16,7 +16,7 @@
 <nav th:insert="header.html :: header"></nav>
 <div class="container">
   <form th:action="@{/submit}" th:object="${userOrderForm}" class="form-horizontal" method="post">
-    <h1>お見積り情報入力</h1>
+    <h1>お見積り情報入力</h1>(※は必須です)
     <ul th:if="${#fields.hasErrors('all')}">
       <li th:each="err : ${#fields.errors('all')}" th:text="${err}"></li>
     </ul>
@@ -24,36 +24,36 @@
       <fieldset>
         <legend>個人情報</legend>
         <div class="form-group">
-          <label for="customerName">氏名</label>
+          <label for="customerName">※氏名</label>
           <input type="text" id="customerName" name="customerName" required th:field="*{customerName}"  class="form-control" value="山田太郎"/><span></span>
 
         </div>
         <div class="form-group">
-          <label for="tel">連絡先TEL</label>
+          <label for="tel">※連絡先TEL(半角数字のみ、-は不要です)</label>
           <input type="tel" id="tel" pattern="[\d\-]*" name="tel" required th:field="*{tel}" class="form-control" value="03-1234-5678"/><span></span>
 
         </div>
         <div class="form-group">
-          <label for="email">連絡先メールアドレス</label>
+          <label for="email">※連絡先メールアドレス</label>
           <input type="text" id="email" name="email" required th:field="*{email}" class="form-control" value="test@test.com"/><span></span>
         </div>
 
         <div class="form-group">
-          <label for="oldPrefectureId">転居元住所（都道府県）</label>
+          <label for="oldPrefectureId">※転居元住所（都道府県）</label>
           <select id="oldPrefectureId" name="oldPrefectureId" class="form-control">
             <option th:each="prefecture : ${prefectures}" th:value="${prefecture.prefectureId}" th:field="*{oldPrefectureId}">[[${prefecture.prefectureName}]]</option>
           </select>
         </div>
 
-<!--        <div class="form-group">-->
-<!--          <label for="oldAddress">転居元住所（市区町村以下）</label>-->
-<!--          <input type="text" id="oldAddress" name="oldAddress" th:field="*{oldAddress}"-->
-<!--                 class="form-control" value="新宿区西新宿1-1-1"/>-->
-<!--        </div>-->
+        <div class="form-group">
+          <label for="oldAddress">転居元住所（市区町村以下）</label>
+          <input type="text" id="oldAddress" name="oldAddress" th:field="*{oldAddress}"
+                 class="form-control" value="新宿区西新宿1-1-1"/>
+       </div>
 
         <!--追加-->
         <div class="form-group">
-          <label for="oldAddress">転居元住所</label>
+          <label for="oldAddress">※転居元住所</label>
           <!-- ▼郵便番号入力フィールド(3桁+4桁) -->
           <input type="text" name="zip1" onKeyUp="AjaxZip3.zip2addr('zip1', 'zip2', 'address1', 'address2');" /> - <input type="text" name="zip2" onKeyUp="AjaxZip3.zip2addr('zip1', 'zip2', 'address1', 'address2');" /><br>
           <!-- ▼住所入力フィールド(都道府県+以降の住所) -->
@@ -64,19 +64,21 @@
         </div>
 
         <div class="form-group">
-          <label for="newPrefectureId">転居先住所（都道府県）</label>
+          <label for="newPrefectureId">※転居先住所（都道府県）</label>
           <select id="newPrefectureId" name="newPrefectureId" class="form-control">
             <option th:each="prefecture : ${prefectures}" th:value="${prefecture.prefectureId}" th:field="*{newPrefectureId}">[[${prefecture.prefectureName}]]</option>
           </select>
         </div>
-<!--        <div class="form-group">-->
-<!--          <label for="newAddress">転居先住所（市区町村以下）</label>-->
-<!--          <input type="text" id="newAddress" name="newAddress" th:field="*{newAddress}" class="form-control"-->
-<!--                 value="札幌市南区1"/>-->
-<!--        </div>-->
+
+        <div class="form-group">
+          <label for="newAddress">転居先住所（市区町村以下）</label>
+          <input type="text" id="newAddress" name="newAddress" th:field="*{newAddress}" class="form-control"
+                 value="札幌市南区1"/>
+        </div>
+
         <!--追加-->
         <div class="form-group">
-          <label for="newAddress">転居先住所</label>
+          <label for="newAddress">※転居先住所</label>
           <!-- ▼郵便番号入力フィールド(3桁+4桁) -->
           <input type="text" name="zip3" onKeyUp="AjaxZip3.zip2addr('zip3', 'zip4', 'address3', 'address4');" /> - <input type="text" name="zip4" onKeyUp="AjaxZip3.zip2addr('zip3', 'zip4', 'address3', 'address4');" /><br>
           <!-- ▼住所入力フィールド(都道府県+以降の住所) -->
@@ -86,29 +88,29 @@
           <input placeholder="建物名と部屋番号" type="text" name="tatemonomei_heyabangou" />
         </div>
         <div class="form-group">
-          <label for="newAddress">引っ越し日</label>
+          <label for="newAddress">※引っ越し日</label>
           <input type="date" id="movingDate" name="movingDate" required th:field="*{movingDate}" class="form-control"
                  value="1"/><span></span>
         </div>
       </fieldset>
       <fieldset>
-        <legend>荷物情報</legend>
+        <legend>荷物情報（半角数字で入力してください)</legend>
         <div class="form-group">
           <label for="box">段ボールの個数</label>
-          <input type="text" id="box" pattern="[\d]*" name="box" required th:field="*{box}" class="form-control" value="10"/><span></span>
+          <input type="text" id="box" pattern="[\d]*" name="box"  th:field="*{box}" class="form-control" value="10"/>
         </div>
         <div class="form-group">
           <label for="bed">ベッドの個数</label>
-          <input type="text" id="bed" pattern="[\d]*" name="bed" required th:field="*{bed}" class="form-control" value="3"/><span></span>
+          <input type="text" id="bed" pattern="[\d]*" name="bed"  th:field="*{bed}" class="form-control" value="3"/>
         </div>
         <div class="form-group">
           <label for="bicycle">自転車の個数</label>
-          <input type="text" id="bicycle" pattern="[\d]*" name="bicycle" required th:field="*{bicycle}" class="form-control" value="1"/><span></span>
+          <input type="text" id="bicycle" pattern="[\d]*" name="bicycle" th:field="*{bicycle}" class="form-control" value="1"/>
         </div>
         <div class="form-group">
           <label for="washingMachine">洗濯機の個数</label>
-          <input type="text" id="washingMachine" pattern="[\d]*" name="washingMachine" required th:field="*{washingMachine}" class="form-control"
-                 value="1"/><span></span>
+          <input type="text" id="washingMachine" pattern="[\d]*" name="washingMachine"  th:field="*{washingMachine}" class="form-control"
+                 value="1"/>
         </div>
         <div class="form-group">
           <label for="washingMachineInstallation">洗濯機の設置工事申し込み</label>
