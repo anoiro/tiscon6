@@ -10,9 +10,12 @@ import com.tiscon.dto.UserOrderDto;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import com.tiscon.form.UserOrderForm;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Date;
+import java.text.SimpleDateFormat;
 
 /**
  * 引越し見積もり機能において業務処理を担当するクラス。
@@ -84,13 +87,13 @@ public class EstimateService {
      * @param dto 見積もり依頼情報
      * @return 概算見積もり結果の料金
      */
-    public Integer getPrice(UserOrderDto dto) {
+    public double getPrice(UserOrderDto dto ,UserOrderForm userOrderForm) {
         double distance = estimateDAO.getDistance(dto.getOldPrefectureId(), dto.getNewPrefectureId());
         // 小数点以下を切り捨てる
         int distanceInt = (int) Math.floor(distance);
 
         // 距離当たりの料金を算出する
-        int priceForDistance = distanceInt * PRICE_PER_DISTANCE;
+        double priceForDistance = distanceInt * PRICE_PER_DISTANCE;
 
         int boxes = getBoxForPackage(dto.getBox(), PackageType.BOX)
                 + getBoxForPackage(dto.getBed(), PackageType.BED)
@@ -98,16 +101,35 @@ public class EstimateService {
                 + getBoxForPackage(dto.getWashingMachine(), PackageType.WASHING_MACHINE);
 
         // 箱に応じてトラックの種類が変わり、それに応じて料金が変わるためトラック料金を算出する。
-        int pricePerTruck = estimateDAO.getPricePerTruck(boxes);
+        double pricePerTruck = estimateDAO.getPricePerTruck(boxes);
 
         // オプションサービスの料金を算出する。
-        int priceForOptionalService = 0;
+        double priceForOptionalService = 0;
 
+        //追加
+        String movingDate = userOrderForm.getMovingDate();
+        String country = "japan,america,russia";
+        String month = movingDate.substring(5,7);
+
+        System.out.println(month);
+
+
+        //
         if (dto.getWashingMachineInstallation()) {
             priceForOptionalService = estimateDAO.getPricePerOptionalService(OptionalServiceType.WASHING_MACHINE.getCode());
         }
 
-        return priceForDistance + pricePerTruck + priceForOptionalService;
+
+
+        if(month.equals("03")  || month.equals("04")){
+            return (priceForDistance + pricePerTruck) * 1.5 + priceForOptionalService;
+        }
+        else if(month.equals("09")){
+            return (priceForDistance + pricePerTruck) * 1.2 + priceForOptionalService;
+        }
+        else  {
+            return priceForDistance + pricePerTruck + priceForOptionalService;
+        }
     }
 
     /**

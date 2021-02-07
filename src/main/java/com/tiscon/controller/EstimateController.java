@@ -146,7 +146,7 @@ public class EstimateController {
         }
         //
 
-        Integer price = estimateService.getPrice(dto);
+        int price = (int)estimateService.getPrice(dto,userOrderForm);
 
         model.addAttribute("prefectures", estimateDAO.getAllPrefectures());
         model.addAttribute("userOrderForm", userOrderForm);
