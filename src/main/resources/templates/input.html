@@ -52,13 +52,16 @@
        </div>
 
         <!--追加-->
+        <input type="text" name="zip1" onKeyUp="AjaxZip3.zip2addr('zip1', 'zip2', 'address1', 'oldAddress');" /> - <input type="text" name="zip2" onKeyUp="AjaxZip3.zip2addr('zip1', 'zip2', 'address1', 'oldAddress');" /><br>
         <div class="form-group">
           <label for="oldAddress">※転居元住所</label>
           <!-- ▼郵便番号入力フィールド(3桁+4桁) -->
-          <input type="text" name="zip1" onKeyUp="AjaxZip3.zip2addr('zip1', 'zip2', 'address1', 'address2');" /> - <input type="text" name="zip2" onKeyUp="AjaxZip3.zip2addr('zip1', 'zip2', 'address1', 'address2');" /><br>
+<!--          <input type="text" name="zip1" onKeyUp="AjaxZip3.zip2addr('zip1', 'zip2', 'address1', 'address2');" /> - <input type="text" name="zip2" onKeyUp="AjaxZip3.zip2addr('zip1', 'zip2', 'address1', 'address2');" /><br>-->
           <!-- ▼住所入力フィールド(都道府県+以降の住所) -->
+<!--          <input placeholder="都道府県" type="text" name="address1" /><br>-->
+          <div></div>
           <input placeholder="都道府県" type="text" name="address1" /><br>
-          <input placeholder="市区町村" type="text" id="oldAddress" name="address2" /><br>
+          <input placeholder="市区町村" type="text" id="oldAddress" name="oldAddress" th:field="*{oldAddress}" class="form-control"/><br>
           <input placeholder="番地" type="text" name="banchi" /><br>
           <input placeholder="建物名と部屋番号" type="text" name="tatemonomei_heyabangou" />
         </div>
@@ -80,10 +83,10 @@
         <div class="form-group">
           <label for="newAddress">※転居先住所</label>
           <!-- ▼郵便番号入力フィールド(3桁+4桁) -->
-          <input type="text" name="zip3" onKeyUp="AjaxZip3.zip2addr('zip3', 'zip4', 'address3', 'address4');" /> - <input type="text" name="zip4" onKeyUp="AjaxZip3.zip2addr('zip3', 'zip4', 'address3', 'address4');" /><br>
+          <input type="text" name="zip3" onKeyUp="AjaxZip3.zip2addr('zip3', 'zip4', 'address3', 'newAddress');" /> - <input type="text" name="zip4" onKeyUp="AjaxZip3.zip2addr('zip3', 'zip4', 'address3', 'newAddress');" /><br>
           <!-- ▼住所入力フィールド(都道府県+以降の住所) -->
           <input placeholder="都道府県" type="text" name="address3" /><br>
-          <input placeholder="市区町村" type="text" id="newAddress" name="address4" /><br>
+          <input placeholder="市区町村" type="text" id="newAddress" name="newAddress" th:field="*{newAddress}" class="form-control"/><br>
           <input placeholder="番地" type="text" name="banchi" /><br>
           <input placeholder="建物名と部屋番号" type="text" name="tatemonomei_heyabangou" />
         </div>
