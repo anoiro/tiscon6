@@ -9,18 +9,9 @@ package com.tiscon.form;
 import javax.validation.constraints.Pattern;
 
 import javax.validation.constraints.*;
-
 import javax.validation.constraints.NotNull;
 
 import javax.validation.constraints.Size;
-
-
-
-
-
-
-
-
 
 /**
 
@@ -49,6 +40,7 @@ public class UserOrderForm<tel, g> {
     private String tel;
 
 
+
     //変更
 
     @NotBlank
@@ -56,6 +48,7 @@ public class UserOrderForm<tel, g> {
     private String movingDate;
 
 //
+
 
 
 
@@ -96,8 +89,8 @@ public class UserOrderForm<tel, g> {
 
 
 
-    @NotBlank(message="段ボールの数を入力してください")
 
+    @NotBlank(message="段ボールの数を入力してください")
     @DecimalMax(value = "200" ,message="{value}を超える段ボールは運べません")
 
 
@@ -168,6 +161,7 @@ public class UserOrderForm<tel, g> {
         return movingDate;
 
     }
+
 
 
 
@@ -256,7 +250,9 @@ public class UserOrderForm<tel, g> {
 
         this.newAddress = newAddress;
 
+
     }
+
 
 
 
@@ -336,4 +332,7 @@ public class UserOrderForm<tel, g> {
 
         this.washingMachineInstallation = washingMachineInstallation;
 
+
     }}
+
+
