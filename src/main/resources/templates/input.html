@@ -19,24 +19,22 @@
     <ul th:if="${#fields.hasErrors('all')}">
       <li th:each="err : ${#fields.errors('all')}" th:text="${err}"></li>
     </ul>
-    <div class="col-sm-12">
+    <div class="col-sm-10">
       <fieldset>
         <legend>個人情報</legend>
         <div class="form-group">
           <label for="customerName">氏名</label>
-          <input type="text" id="customerName" name="customerName" th:field="*{customerName}" class="form-control" value="山田太郎"/>
-          <td th:if="${#fields.hasErrors('customerName')}" th:errors="*{customerName}"
-              style="color: red"></td>
+          <input type="text" id="customerName" name="customerName" required th:field="*{customerName}"  class="form-control" value="山田太郎"/><span></span>
+
         </div>
         <div class="form-group">
           <label for="tel">連絡先TEL</label>
-          <input type="tel" id="tel" name="tel" th:field="*{tel}" class="form-control" value="03-1234-5678"/>
-          <td th:if="${#fields.hasErrors('tel')}" th:errors="*{tel}"
-              style="color: red"></td>
+          <input type="tel" id="tel" pattern="[\d\-]*" name="tel" required th:field="*{tel}" class="form-control" value="03-1234-5678"/><span></span>
+
         </div>
         <div class="form-group">
           <label for="email">連絡先メールアドレス</label>
-          <input type="text" id="email" name="email" th:field="*{email}" class="form-control" value="test@test.com"/>
+          <input type="text" id="email" name="email" required th:field="*{email}" class="form-control" value="test@test.com"/><span></span>
         </div>
         <div class="form-group">
           <label for="oldPrefectureId">転居元住所（都道府県）</label>
@@ -44,18 +42,20 @@
             <option th:each="prefecture : ${prefectures}" th:value="${prefecture.prefectureId}" th:field="*{oldPrefectureId}">[[${prefecture.prefectureName}]]</option>
           </select>
         </div>
+
         <div class="form-group">
           <label for="oldAddress">転居元住所（市区町村以下）</label>
           <input type="text" id="oldAddress" name="oldAddress" th:field="*{oldAddress}"
                  class="form-control" value="新宿区西新宿1-1-1"/>
         </div>
+
         <!--追加-->
         <div class="form-group">
           <label for="oldAddress">転居元住所</label>
           <!-- ▼郵便番号入力フィールド(3桁+4桁) -->
           <input type="text" name="zip1" onKeyUp="AjaxZip3.zip2addr('zip1', 'zip2', 'address1', 'address2');" /> - <input type="text" name="zip2" onKeyUp="AjaxZip3.zip2addr('zip1', 'zip2', 'address1', 'address2');" /><br>
           <!-- ▼住所入力フィールド(都道府県+以降の住所) -->
-          <input placeholder="都道府県" type="text" name="address1" /><br>
+          <!-- <input placeholder="都道府県" type="text" name="address1" /><br>-->
           <input placeholder="市区町村" type="text" name="address2" /><br>
           <input placeholder="番地" type="text" name="banchi" /><br>
           <input placeholder="建物名と部屋番号" type="text" name="tatemonomei_heyabangou" />
@@ -74,7 +74,7 @@
         </div>
         <!--追加-->
         <div class="form-group">
-          <label for="oldAddress">転居元住所</label>
+          <label for="newAddress">転居先住所</label>
           <!-- ▼郵便番号入力フィールド(3桁+4桁) -->
           <input type="text" name="zip1" onKeyUp="AjaxZip3.zip2addr('zip1', 'zip2', 'address1', 'address2');" /> - <input type="text" name="zip2" onKeyUp="AjaxZip3.zip2addr('zip1', 'zip2', 'address1', 'address2');" /><br>
           <!-- ▼住所入力フィールド(都道府県+以降の住所) -->
@@ -85,28 +85,28 @@
         </div>
         <div class="form-group">
           <label for="newAddress">引っ越し日</label>
-          <input type="date" id="movingDate" name="movingDate" th:field="*{movingDate}" class="form-control"
-                 value="1"/>
+          <input type="date" id="movingDate" name="movingDate" required th:field="*{movingDate}" class="form-control"
+                 value="1"/><span></span>
         </div>
       </fieldset>
       <fieldset>
         <legend>荷物情報</legend>
         <div class="form-group">
           <label for="box">段ボールの個数</label>
-          <input type="text" id="box" name="box" th:field="*{box}" class="form-control" value="10"/>
+          <input type="text" id="box" pattern="[\d]*" name="box" required th:field="*{box}" class="form-control" value="10"/><span></span>
         </div>
         <div class="form-group">
           <label for="bed">ベッドの個数</label>
-          <input type="text" id="bed" name="bed" th:field="*{bed}" class="form-control" value="3"/>
+          <input type="text" id="bed" pattern="[\d]*" name="bed" required th:field="*{bed}" class="form-control" value="3"/><span></span>
         </div>
         <div class="form-group">
           <label for="bicycle">自転車の個数</label>
-          <input type="text" id="bicycle" name="bicycle" th:field="*{bicycle}" class="form-control" value="1"/>
+          <input type="text" id="bicycle" pattern="[\d]*" name="bicycle" required th:field="*{bicycle}" class="form-control" value="1"/><span></span>
         </div>
         <div class="form-group">
           <label for="washingMachine">洗濯機の個数</label>
-          <input type="text" id="washingMachine" name="washingMachine" th:field="*{washingMachine}" class="form-control"
-                 value="1"/>
+          <input type="text" id="washingMachine" pattern="[\d]*" name="washingMachine" required th:field="*{washingMachine}" class="form-control"
+                 value="1"/><span></span>
         </div>
         <div class="form-group">
           <label for="washingMachineInstallation">洗濯機の設置工事申し込み</label>
@@ -120,6 +120,7 @@
         <div class="text-center">
           <button type="submit" name="backToTop" class="btn btn-primary">TOPへ戻る</button>
           <button type="submit" name="confirm" class="btn btn-primary">確認</button>
+          <!--<button type="submit" name="calculation" class="btn btn-primary">概算見積もりをする</button>-->
         </div>
       </div>
     </div>

@@ -62,7 +62,7 @@ public class EstimateService {
         packageList.add(new CustomerPackage(customer.getCustomerId(), PackageType.WASHING_MACHINE.getCode(), dto.getWashingMachine()));
         estimateDAO.batchInsertCustomerPackage(packageList);
     }
-
+// public Integer boxCheck(UserOrderDto dto) {}
     /**
      * 見積もり依頼に応じた概算見積もりを行う。
      *
