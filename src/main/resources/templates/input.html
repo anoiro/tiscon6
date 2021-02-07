@@ -15,7 +15,7 @@
 <body>
 <nav th:insert="header.html :: header"></nav>
 <div class="container">
-  <form th:action="@{/submit}" th:object="${userOrderForm}" class="form-horizontal" method="post">
+  <form th:action="@{/submit}" th:object="${userOrderForm}" class="form-horizontal" method="post" name="userOrderForm">
     <h1>お見積り情報入力</h1>(※は必須です)
     <ul th:if="${#fields.hasErrors('all')}">
       <li th:each="err : ${#fields.errors('all')}" th:text="${err}"></li>
@@ -44,6 +44,7 @@
             <option th:each="prefecture : ${prefectures}" th:value="${prefecture.prefectureId}" th:field="*{oldPrefectureId}">[[${prefecture.prefectureName}]]</option>
           </select>
         </div>
+
         <!--
         <div class="form-group">
           <label for="oldAddress">転居元住所（市区町村以下）</label>
@@ -51,6 +52,7 @@
                  class="form-control" value="新宿区西新宿1-1-1"/>
        </div>
         -->
+
         <!--追加-->
         <label >郵便番号</label>
         <input type="text" name="zip1" onKeyUp="AjaxZip3.zip2addr('zip1', 'zip2', 'address1', 'oldAddress');" /> - <input type="text" name="zip2" onKeyUp="AjaxZip3.zip2addr('zip1', 'zip2', 'address1', 'oldAddress');" /><br>
@@ -60,9 +62,14 @@
 <!--          <input type="text" name="zip1" onKeyUp="AjaxZip3.zip2addr('zip1', 'zip2', 'address1', 'address2');" /> - <input type="text" name="zip2" onKeyUp="AjaxZip3.zip2addr('zip1', 'zip2', 'address1', 'address2');" /><br>-->
           <!-- ▼住所入力フィールド(都道府県+以降の住所) -->
 <!--          <input placeholder="都道府県" type="text" name="address1" /><br>-->
-          <div></div>
-          <input placeholder="都道府県" type="text" name="address1" /><br>
-          <input placeholder="市区町村以下" type="text" id="oldAddress" name="oldAddress" required th:field="*{oldAddress}" class="form-control"/><br>
+<!--          <input placeholder="都道府県" type="text" name="address1" /><br>-->
+
+<!--          <input type="text" id="address1" name="address1" list="kenpo" placeholder="都道府県" autocomplete="off">-->
+          <select id="address1" name="address1">
+            <option th:each="prefecture : ${prefectures}" th:value="${prefecture.prefectureId}" th:field="*{oldPrefectureId}">[[${prefecture.prefectureName}]]</option>
+          </select>
+
+          <input placeholder="市区町村以下" type="text" id="oldAddress" name="oldAddress" required th:field="*{oldAddress}" /><br>
           <!--<input placeholder="番地" type="text" name="banchi" /><br>
           <input placeholder="建物名と部屋番号" type="text" name="tatemonomei_heyabangou" />-->
         </div>
@@ -88,12 +95,15 @@
           <input type="text" name="zip3" onKeyUp="AjaxZip3.zip2addr('zip3', 'zip4', 'address3', 'newAddress');" /> - <input type="text" name="zip4" onKeyUp="AjaxZip3.zip2addr('zip3', 'zip4', 'address3', 'newAddress');" /><br>
           <!-- ▼住所入力フィールド(都道府県+以降の住所) -->
           <label for="newAddress">※転居先住所</label>
-          <div></div>
-          <input placeholder="都道府県" type="text" name="address3" /><br>
-          <input placeholder="市区町村以下" type="text" id="newAddress" name="newAddress" required th:field="*{newAddress}" class="form-control"/><br>
+          <select id="address3" name="address3">
+            <option th:each="prefecture : ${prefectures}" th:value="${prefecture.prefectureId}" th:field="*{oldPrefectureId}">[[${prefecture.prefectureName}]]</option>
+          </select>
+<!--          <input placeholder="都道府県" type="text" name="address3" /><br>-->
+          <input placeholder="市区町村以下" type="text" id="newAddress" name="newAddress" required th:field="*{newAddress}" /><br>
           <!--<input placeholder="番地" type="text" name="banchi" /><br>
           <input placeholder="建物名と部屋番号" type="text" name="tatemonomei_heyabangou" />-->
         </div>
+
         <div class="form-group">
           <label for="newAddress">※引っ越し日</label>
           <input type="date" id="movingDate" name="movingDate" required th:field="*{movingDate}" class="form-control"
@@ -130,7 +140,7 @@
       <div class="form-group">
         <div class="text-center">
           <button type="submit" name="backToTop" class="btn btn-primary">TOPへ戻る</button>
-          <button type="submit" name="confirm" class="btn btn-primary">確認</button>
+          <button type="submit" name="confirm" id="confirm" class="btn btn-primary">確認</button>
           <!--<button type="submit" name="calculation" class="btn btn-primary">概算見積もりをする</button>-->
         </div>
       </div>
@@ -140,6 +150,23 @@
 <script src="../js/jquery-3.5.1.min.js" th:src="@{/js/jquery-3.5.1.min.js}"></script>
 <script src="../js/popper.min.js" th:src="@{/js/popper.min.js}"></script>
 <script src="../js/bootstrap.min.js" th:src="@{/js/bootstrap.min.js}"></script>
+<script language="javascript" type="text/javascript">
+ const button = document.getElementById('confirm');
+ button.addEventListener('click', function(e)  {
+  e.preventDefault();
+  confirm.value="";
+  if(box.value==""){box.value="0";}
+  if(bed.value==""){bed.value="0";}
+  if(bicycle.value==""){bicycle.value="0";}
+  if(washingMachine.value==""){washingMachine.value="0";}
+  var q = document.createElement('input');
+  q.type = 'hidden';
+    q.name = 'confirm';
+    q.value = "";
+       	document.userOrderForm.appendChild(q);
+  document.userOrderForm.submit();
+  });
+</script>
 </body>
 
 </html>
