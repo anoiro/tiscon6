@@ -44,14 +44,15 @@
             <option th:each="prefecture : ${prefectures}" th:value="${prefecture.prefectureId}" th:field="*{oldPrefectureId}">[[${prefecture.prefectureName}]]</option>
           </select>
         </div>
-
+        <!--
         <div class="form-group">
           <label for="oldAddress">転居元住所（市区町村以下）</label>
           <input type="text" id="oldAddress" name="oldAddress" th:field="*{oldAddress}"
                  class="form-control" value="新宿区西新宿1-1-1"/>
        </div>
-
+        -->
         <!--追加-->
+        <label >郵便番号</label>
         <input type="text" name="zip1" onKeyUp="AjaxZip3.zip2addr('zip1', 'zip2', 'address1', 'oldAddress');" /> - <input type="text" name="zip2" onKeyUp="AjaxZip3.zip2addr('zip1', 'zip2', 'address1', 'oldAddress');" /><br>
         <div class="form-group">
           <label for="oldAddress">※転居元住所</label>
@@ -61,9 +62,9 @@
 <!--          <input placeholder="都道府県" type="text" name="address1" /><br>-->
           <div></div>
           <input placeholder="都道府県" type="text" name="address1" /><br>
-          <input placeholder="市区町村" type="text" id="oldAddress" name="oldAddress" th:field="*{oldAddress}" class="form-control"/><br>
-          <input placeholder="番地" type="text" name="banchi" /><br>
-          <input placeholder="建物名と部屋番号" type="text" name="tatemonomei_heyabangou" />
+          <input placeholder="市区町村以下" type="text" id="oldAddress" name="oldAddress" required th:field="*{oldAddress}" class="form-control"/><br>
+          <!--<input placeholder="番地" type="text" name="banchi" /><br>
+          <input placeholder="建物名と部屋番号" type="text" name="tatemonomei_heyabangou" />-->
         </div>
 
         <div class="form-group">
@@ -72,23 +73,26 @@
             <option th:each="prefecture : ${prefectures}" th:value="${prefecture.prefectureId}" th:field="*{newPrefectureId}">[[${prefecture.prefectureName}]]</option>
           </select>
         </div>
-
+        <!--
         <div class="form-group">
           <label for="newAddress">転居先住所（市区町村以下）</label>
           <input type="text" id="newAddress" name="newAddress" th:field="*{newAddress}" class="form-control"
                  value="札幌市南区1"/>
         </div>
+        -->
 
         <!--追加-->
         <div class="form-group">
-          <label for="newAddress">※転居先住所</label>
           <!-- ▼郵便番号入力フィールド(3桁+4桁) -->
+          <label >郵便番号</label>
           <input type="text" name="zip3" onKeyUp="AjaxZip3.zip2addr('zip3', 'zip4', 'address3', 'newAddress');" /> - <input type="text" name="zip4" onKeyUp="AjaxZip3.zip2addr('zip3', 'zip4', 'address3', 'newAddress');" /><br>
           <!-- ▼住所入力フィールド(都道府県+以降の住所) -->
+          <label for="newAddress">※転居先住所</label>
+          <div></div>
           <input placeholder="都道府県" type="text" name="address3" /><br>
-          <input placeholder="市区町村" type="text" id="newAddress" name="newAddress" th:field="*{newAddress}" class="form-control"/><br>
-          <input placeholder="番地" type="text" name="banchi" /><br>
-          <input placeholder="建物名と部屋番号" type="text" name="tatemonomei_heyabangou" />
+          <input placeholder="市区町村以下" type="text" id="newAddress" name="newAddress" required th:field="*{newAddress}" class="form-control"/><br>
+          <!--<input placeholder="番地" type="text" name="banchi" /><br>
+          <input placeholder="建物名と部屋番号" type="text" name="tatemonomei_heyabangou" />-->
         </div>
         <div class="form-group">
           <label for="newAddress">※引っ越し日</label>
